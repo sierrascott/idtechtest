@@ -114,6 +114,9 @@ switch (currentLevel) {
 
 }
 
+console.log(myName);
+console.log(currentLevel);
+
 // The Canvas is just what the Camera sees
 var canvasWidth = 600; //1280 is the full scene, 800 can provide a bit more space
 var canvasHeight = 720;
