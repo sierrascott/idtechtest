@@ -1,7 +1,6 @@
-/*Link        https://tinyurl.com/CoolDonutRun         */
 
 
-    /*------------------------------------------------------/
+/*------------------------------------------------------/
    /                                                       /
   /                      How to Play                      /
  /                                                       /
@@ -18,10 +17,10 @@
     Hold Shift       :  Run faster
     + and -          :  Zoom in and out
     E                :  Enter/exit Editor Mode
-    
-    
+
+
  <-------------- Editor Mode Controls -------------->
- 
+
     1-8              :  Switch which object is being placed
                         [ 1 ] Platform
                         [ 2 ] Coin
@@ -41,23 +40,77 @@
 
 
 
-    /*------------------------------------------------------/
+/*------------------------------------------------------/
    /                                                       /
   /                      Variables                        /
  /                                                       /
 /------------------------------------------------------*/
 
-// Music 
+// Music
 var song
 // Game Information
-var myGameTitle = "2D Platformer Game"; // Replace 2D Platformer Game with the title of your game
-var myName = "Lee"; // Replace Eevee with your name
+var myGameTitle = "The Best Game EVER!!!"; // Replace 2D Platformer Game with the title of your game
+var myName = prompt("What's your name?"); // This will set the name entered as the player's name
 var debugGame = "off"; // "on" or "off"
 var defaultValues = false; // To reset values, set to true
 
 // Level to Load
-var currentLevel = "Donut Land Adventure"; // Default
+var currentLevel = prompt("Select a level:\n" +
+  "1) Blank Level\n" +
+  "2) Donut Land Adventure\n" +
+  "3) Donut Canyon\n" +
+  "4) Ghost Heights\n" +
+  "5) Hidden Donut\n" +
+  "6) Spikey Spikers\n" +
+  "7) Unreachable Goal\n" +
+  "8) Invisible Path\n" +
+  "9) Donut Mania");
 // Level Options: Blank Level, Donut Land Adventure, Donut Canyon, Ghost Heights, Hidden Donut, Spikey Spikers, Unreachable Goal, Invisible Path, Donut Mania
+
+// This sets the current level to whatever the player writes in, whether it's a number or the level name
+switch (currentLevel) {
+  case 1:
+  case "Blank Level"):
+    currentLevel = "Blank Level";
+    break;
+  case 2:
+    case "Donut Land Adventure"):
+    currentLevel = "Donut Land Adventure";
+    break;
+  case 3:
+  case "Donut Canyon"):
+    currentLevel = "Donut Canyon";
+    break;
+  case 4:
+  case "Ghost Heights"):
+    currentLevel = "Ghost Heights";
+    break;
+  case 5:
+  case "Hidden Donut"):
+    currentLevel = "Hidden Donut";
+    break;
+  case 6:
+  case "Spikey Spikers"):
+    currentLevel = "Spikey Spikers";
+    break;
+  case 7:
+  case "Unreachable Goal"):
+    currentLevel = "Unreachable Goal";
+    break;
+  case 8:
+  case "Invisible Path"):
+    currentLevel = "Invisible Path";
+    break;
+  case 9:
+  case "Donut Mania"):
+    currentLevel = "Donut Mania";
+    break;
+  default:
+    currentLevel = "Blank Level";
+
+}
+// Music
+var song;
 
 // The Canvas is just what the Camera sees
 var canvasWidth = 600; //1280 is the full scene, 800 can provide a bit more space
@@ -67,12 +120,13 @@ var canvasHeight = 720;
 var SCENE_W = 1280;
 var SCENE_H = 720;
 
+
   /*--------------------/
  /       PLAYER        /
 /--------------------*/
 
 // Player Variables
-var playerIdleImage = "images/Idle.gif";
+var playerIdleImage = "images/mycharacter.gif";
 var idleFrames = 1;
 var playerX = 75; // The starting position of the player sprite
 var playerY = 580;
@@ -83,13 +137,13 @@ var playerColliderX = 40;
 var playerColliderY = 64;
 
 // Movement
-var playerWalkImage = "images/Walk.gif";
+var playerWalkImage = "images/player_run.png";
 var runFrames = 4;
 var walkSpeed = 5; // The higher the number, the faster the player is
 var runSpeed = 10; // When Shift is held, adjust how much it speeds up/slows down by: right now this is twice the player's speed
 
 // Jumping & Gravity
-var playerJumpImage = "images/Jump.gif";
+var playerJumpImage = "images/player_jumping.png";
 var jumpFrames = 8;
 var jump = -15; // How high the player jumps; it must always be negative
 var GRAVITY = 1; // 1 (default), 2 (heavier)
@@ -239,7 +293,7 @@ var platformWidth = 103;
 var textPlatform = "Platform";
 
 // Ground
-var groundImage = "images/ground.png";
+var groundImage = "images/New Piskel-1.png.png";
 var groundX = 640;
 var groundY = 675;
 
@@ -252,8 +306,8 @@ var wall2X = 1500;
 var wallY = 560;
 
 // Camera/Invisible Walls
-var borderLeft = -63; // -336 is the edge of the left platform; decrease this number if you want your player to be able to move further left
-var borderRight = 1362; // 1628 is the edge of the right platform; increase this number for further right
+var borderLeft = -33; // -336 is the edge of the left platform; decrease this number if you want your player to be able to move further left
+var borderRight = 1062; // 1628 is the edge of the right platform; increase this number for further right
 
 
   /*--------------------/
@@ -384,8 +438,8 @@ var gameoverbgSprite = "on";
 var gameoverBgImage = "images/gameover.png";
 var gameoverBgX = 300;
 var gameoverBgY = 360;
-var textGameOver = "Game Over, But Nice Try";
-var colorGameOver = "rgb(142,40,245)";
+var textGameOver = "GAME OVER";
+var colorGameOver = "white";
 
 
   /*--------------------/
@@ -451,12 +505,12 @@ var keyReload = "R";
 /**************************************************************************
 
                     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    
-                    
+
+
    !!!!!!!!!!!!!!!    DON'T CHANGE ANY CODE BELOW HERE    !!!!!!!!!!!!!!!
-   
-   
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx              
+
+
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 ***************************************************************************/
 
@@ -557,18 +611,18 @@ var newEnemyColliderY = 60;
 // <-------------- Preload: Define Images -------------->
 
 function preload() {
-    // Music
-    song = loadSound("Music/ElectronicMusic.mp3", loaded);
-    
+
+  // Music
+  song = loadSound("music/music.mp3", loaded);
     // Font
     font = loadFont("fonts/Poppins-Bold.ttf");
-    
+
     // Still Images
     startImg = loadImage(startButtonImage);
     winbgImg = loadImage(winBgImage);
     gameoverbgImg = loadImage(gameoverBgImage);
     //titleBackground = loadImage("images/first_level.png"); // This is an example of changing the title screen to an image instead of a color
-    
+
     // Player
     // Load Images
     playerWalkImg = loadSpriteSheet(playerWalkImage, playerWidth, playerHeight, runFrames);
@@ -595,7 +649,7 @@ function preload() {
     enemyWalk = loadAnimation(enemyImg);
     spikeAnim = loadAnimation(spikeImg);
     chaserMove = loadAnimation(chaserImg);
-    
+
     // Level Background
     platformImg = loadImage(platformImage);
     groundImg = loadImage(groundImage);
@@ -606,13 +660,13 @@ function preload() {
     // Attacks
     hitboxImg = loadImage(hitboxImage);
     projectileImg = loadImage(projectileImage);
-    
+
     // Enemy Attacks
     enemyProjectileImg = loadSpriteSheet(enemyProjectileImage, enemyProjectileWidth, enemyProjectileHeight, enemyProjectileFrames);
     enemyProjectileDestroyImg = loadSpriteSheet(enemyProjectileDestroyImage, enemyProjectileWidth, enemyProjectileHeight, enemyProjectileDestroyFrames);
     enemyProjectileIdleAnim = loadAnimation(enemyProjectileImg);
     enemyProjectileDestroyAnim = loadAnimation(enemyProjectileDestroyImg);
-    
+
     // Items
     // Load Item Images
     coinImg = loadSpriteSheet(coinImage, coinWidth, coinHeight, coinFrames);
@@ -630,12 +684,12 @@ function preload() {
     playerIdlePowerImg = loadSpriteSheet(powerPlayerIdleImage, playerWidth, playerHeight, idleFrames);
     playerAttackPowerImg = loadSpriteSheet(powerPlayerAttackImage, playerWidthAttack, playerHeight, attackFrames); // playerWidth, playerHeight, attackFrames
     playerJumpPowerImg = loadSpriteSheet(powerPlayerJumpImage, playerWidth, playerHeight, jumpFrames);
-    
+
     playerWalkPower = loadAnimation(playerWalkPowerImg);
     playerIdlePower = loadAnimation(playerIdlePowerImg);
     playerAttackPower = loadAnimation(playerAttackPowerImg);
     playerJumpPower = loadAnimation(playerJumpPowerImg);
-    
+
     // Health Bar
     hpBgImg = loadImage(HPBgImage);
     hp4Img = loadImage(HP4Image);
@@ -656,18 +710,18 @@ function setup() {
     if (mountainSprite == "on" || mountainSprite == true) {
         makeMountainTiles();
     }
-    
+
     trees = new Group();
     if (treeSprite == "on" || treeSprite == true) {
         if (currentLevel !== "Donut Canyon") {
             makeTreeTiles();
         }
     }
-    
+
     if (defaultValues == true) {
         loadDefault();
     }
-    
+
     // Create Player
     player = createSprite(playerX, playerY);
     player.addAnimation("idle", playerIdle);
@@ -676,7 +730,7 @@ function setup() {
     player.addAnimation("jump", playerJump);
     player.setCollider("rectangle", 0, 0, playerColliderX, playerColliderY);
     player.visible = false;
-    
+
     // Powered up Player
     player.addAnimation("idlePower", playerIdlePower);
     player.addAnimation("walkPower", playerWalkPower);
@@ -693,7 +747,7 @@ function setup() {
     wall1.addImage(wallImg);
     wall1.setCollider("rectangle");
     wall1.visible = true;
-    
+
     wall2 = createSprite(wall2X, wallY);
     wall2.addImage(wallImg);
     wall2.setCollider("rectangle");
@@ -703,19 +757,19 @@ function setup() {
     walls.add(ground);
     walls.add(wall1);
     walls.add(wall2);
-    
+
     goal = createSprite(goalX, goalY);
     goal.addAnimation("animated", goalAnim);
     goal.visible = false;
-    
-    
+
+
     /*------------------------------------------------------/
    /                                                       /
   /                      Level Setup                      /
  /                                                       /
 /------------------------------------------------------*/
 
-    
+
     // Default Level
     if (currentLevel == "Default") {
         levelInformation = {
@@ -768,8 +822,8 @@ function setup() {
             }
           ]
         }
-    } 
-    
+    }
+
     // Blank Level
     if (currentLevel == "Blank Level") {
         levelInformation = {
@@ -780,12 +834,12 @@ function setup() {
             "powerups": []
         }
     }
-    
+
     // Donut Land Adventure
     if (currentLevel == "Donut Land Adventure") {
         loadDefault();
-        myGameTitle = "Donut Land Adventure";
-        myName = "Lee";
+        myGameTitle = "Awesome Sauce Adventure";
+        //myName = "Sierra";
         levelInformation = {
           "platforms": [
             {
@@ -836,13 +890,13 @@ function setup() {
             }
           ]
         }
-    } 
-    
+    }
+
     // Donut Canyon
     if (currentLevel == "Donut Canyon") {
         loadDefault();
         myGameTitle = "Donut Canyon";
-        myName = "Lee";
+        //myName = "Eevee";
         player.position.x = 130;
         player.position.y = 500;
         goal.position.x = 1400;
@@ -859,7 +913,7 @@ function setup() {
         level1Background = "skyblue";
         youWinBackground = "pink";
         playerAttackType = "";
-        
+
         levelInformation = {
           "platforms": [
             {
@@ -919,12 +973,12 @@ function setup() {
         }
 
     }
-    
+
     // Ghost Heights
     if (currentLevel == "Ghost Heights") {
         loadDefault();
         myGameTitle = "Ghost Heights";
-        myName = "Lee";
+        //myName = "Eevee";
         player.position.x = 130;
         goal.position.x = 1400;
         goal.position.y = 200;
@@ -934,7 +988,7 @@ function setup() {
         level1Background = "orange";
         youWinBackground = "gray";
         playerAttackType = "";
-        
+
         levelInformation = {
           "platforms": [
             {
@@ -952,7 +1006,7 @@ function setup() {
             {
               "x": 750,
               "y": 340
-            }, 
+            },
             {
               "x": 910,
               "y": 230
@@ -961,7 +1015,7 @@ function setup() {
               "x": 1200,
               "y": 375
             }
-              
+
           ],
           "enemies": [
             {
@@ -1030,19 +1084,19 @@ function setup() {
           "powerups": []
         }
     }
-    
+
     // Hidden Donut
     if (currentLevel == "Hidden Donut") {
         loadDefault();
         myGameTitle = "Hidden Donut";
-        myName = "Lee";
+        //myName = "Eevee";
         player.position.x = 130;
         goal.position.y = 320;
         titleBackground = "blue";
         level1Background = "pink";
         youWinBackground = "skyblue";
         playerAttackType = "";
-        
+
         levelInformation = {
           "platforms": [
             {
@@ -1077,7 +1131,7 @@ function setup() {
             {
               "x": 1195, // top
               "y": 250
-            }, 
+            },
             {
               "x": 1195, // bottom
               "y": 400
@@ -1156,12 +1210,12 @@ function setup() {
           "powerups": []
         }
     }
-    
+
     // Spikey Spikers
     if (currentLevel == "Spikey Spikers") {
         //loadDefault();
         myGameTitle = "Spikey Spikers";
-        myName = "Lee";
+        //myName = "Eevee";
         player.position.x = 130;
         goal.position.y = 220;
         //jumpMax = 3;
@@ -1174,7 +1228,7 @@ function setup() {
         level1Background = "purple";
         youWinBackground = "yellow";
         playerAttackType = "";
-        
+
         levelInformation = {
           "platforms": [],
           "enemies": [
@@ -1213,7 +1267,7 @@ function setup() {
               "y": 600,
               "type": "spike"
             }
-              
+
           ],
           "coins": [
             {
@@ -1249,12 +1303,12 @@ function setup() {
           "powerups": []
         }
     }
-    
+
     // Unreachable Goal
     if (currentLevel == "Unreachable Goal") {
         //loadDefault();
         myGameTitle = "Unreachable Goal";
-        myName = "Lee";
+        //myName = "Eevee";
         player.position.x = 130;
         //goal.position.x = 800;
         disableEditor = true;
@@ -1262,7 +1316,7 @@ function setup() {
         level1Background = "teal";
         youWinBackground = "blue";
         playerAttackType = "ranged";
-        
+
         levelInformation = {
           "platforms": [
             {
@@ -1329,12 +1383,12 @@ function setup() {
         }
 
     }
-    
+
     // Invisible Path
     if (currentLevel == "Invisible Path") {
         loadDefault();
         myGameTitle = "Invisible Path";
-        myName = "Lee";
+        //myName = "Eevee";
         player.position.x = 130;
         goal.position.x = 150;
         goal.position.y = 100;
@@ -1345,7 +1399,7 @@ function setup() {
         level1Background = "white";
         youWinBackground = "violet";
         playerAttackType = "";
-        
+
         levelInformation = {
             "platforms": [],
             "enemies": [],
@@ -1355,12 +1409,12 @@ function setup() {
         }
 
     }
-    
+
     // Donut Mania
     if (currentLevel == "Donut Mania") {
         loadDefault();
         myGameTitle = "Donut Mania";
-        myName = "Lee";
+        //myName = "Eevee";
         player.position.x = 200;
         goal.position.x = 40;
         goal.position.y = 100;
@@ -1369,7 +1423,7 @@ function setup() {
         level1Background = "LIGHTGREEN";
         youWinBackground = "MEDIUMVIOLETRED";
         playerAttackType = "ranged";
-        
+
         levelInformation = {
           "platforms": [
             /*{
@@ -1417,7 +1471,7 @@ function setup() {
               "y": 410
             }
           ],
-            
+
           "enemies": [
             {
               "x": -5,
@@ -1429,8 +1483,8 @@ function setup() {
               "y": 300,
               "type": "chaser"
             },
-              
-              
+
+
             {
               "x": 480,
               "y": 250,
@@ -1466,7 +1520,7 @@ function setup() {
               "y": 245,
               "type": "ranged"
             },
-              
+
             {
               "x": -10,
               "y": 600,
@@ -1488,7 +1542,7 @@ function setup() {
               "type": "spike"
             }
           ],
-            
+
           "coins": [
             {
               "x": -10,
@@ -1525,9 +1579,9 @@ function setup() {
             {
               "x": 1300,
               "y": 530
-            }  
+            }
           ],
-            
+
           "healths": [
             {
               "x": 1215,
@@ -1542,8 +1596,8 @@ function setup() {
           ]
         }
     }
-    
-    
+
+
     /*------------------------------------------------------/
    /                                                       /
   /                     Custom Level                      /
@@ -1554,55 +1608,55 @@ function setup() {
     if (currentLevel == "myLevel") {
             levelInformation = {
                  // Paste your level information here (from the JSON file)!
-                
-                
-            }   
-    }
-    
-   
 
-    
-    
-    
-    
-    
-    
-    
-    
+
+            }
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 /**************************************************************************
 
                     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    
-                    
+
+
    !!!!!!!!!!!!!!!    DON'T CHANGE ANY CODE BELOW HERE    !!!!!!!!!!!!!!!
-   
-   
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx              
+
+
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 ***************************************************************************/
 
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
+
     /*------------------------------------------------------/
    /                                                       /
   /              Load Assets (Continued)                  /
  /                                                       /
 /------------------------------------------------------*/
 
-    
+
 // <-------------- Setup: Place Additional Assets -------------->
-    
+
     // Enemy Groups
     enemies = new Group();
     monsters = new Group();
@@ -1612,7 +1666,7 @@ function setup() {
     obstacles = new Group();
     enemyProjectiles = new Group(); // Ranged Enemy
 
-    
+
     // Item Groups
     platforms = new Group();
     collectibles = new Group();
@@ -1620,25 +1674,25 @@ function setup() {
     healths = new Group();
 
     allItems = new Group(); // Group for all Editor Mode objects
-  
+
     loadLevelJSON(levelInformation); // Loads the currentLevel
-    
+
     // Title Screen
     startButton = createSprite(startButtonX, startButtonY);
     startButton.addImage(startImg);
     startButton.setCollider("rectangle", 0, 0, startWidth, startHeight);
     startButton.visible = false;
-    
+
     // You Win Screen
     winbg = createSprite(winBgX, winBgY);
     winbg.addImage(winbgImg);
     winbg.visible = false;
-    
+
     // Game Over Screen
     gameoverbg = createSprite(gameoverBgX, gameoverBgY);
     gameoverbg.addImage(gameoverbgImg);
     gameoverbg.visible = false;
-    
+
     // Player Attacks
     hitboxes = new Group(); // Melee
     projectiles = new Group(); // Ranged
@@ -1647,21 +1701,21 @@ function setup() {
    // Create Health
     hpBg = createSprite(hpX, hpY);
     hpBg.addImage(hpBgImg);
-    hpImg = createSprite(hpX, hpY); 
+    hpImg = createSprite(hpX, hpY);
     hpImg.addImage("red", hp1Img);
     hpImg.addImage("orange", hp2Img);
     hpImg.addImage("yellow", hp3Img);
     hpImg.addImage("green", hp4Img);
     hpBorder = createSprite(hpX, hpY);
-    hpBorder.addImage(hpBorderImg); 
-    
+    hpBorder.addImage(hpBorderImg);
+
     // Editor UI elements
     fileUploadInput = createFileInput(uploadLevel);
     fileUploadInput.position(25, 720 - fileUploadInput.size().height -10);
     fileUploadInput.hide();
 }
 
-function loaded() {
+function  loaded() {
   song.play();
   song.loop();
 }
@@ -1698,25 +1752,25 @@ function keyPressed() {
             scene = "level1";
         }
     }
-    
+
     if (keyCode == reloadKey) { // R key
         window.location.reload();
     }
-    
+
     // This prevents the player from being able to hold down this button
-    if (keyCode == attackKey && gamePlay == true && playerAttackStyle == "melee") {  // Q key 
+    if (keyCode == attackKey && gamePlay == true && playerAttackStyle == "melee") {  // Q key
         hitboxes.removeSprites();
         meleeAttack = true;
         attack();
     }
-        
+
     // Delete Object
     if (keyCode == deleteKey && delPressed == false) { // Delete Key
         delPressed = true;
     }
-    
+
     // Save Level
-    if (keyCode == saveKey && editorMode == true) { // V key 
+    if (keyCode == saveKey && editorMode == true) { // V key
         var saveFile = prompt("Save your file as:");
         saveLevel(saveFile);
         console.log("Saved file as " + saveFile);
@@ -1736,7 +1790,7 @@ function keyPressed() {
         }
         console.log("Editor Mode On: " + editorMode);
     }
-    
+
     // Instructional Text On
     if (keyCode == instructKey && editorMode == true) {
         if (instructOn == true) {
@@ -1773,7 +1827,7 @@ function playerMovement() { // Moving left and right
         if (player.position.x > borderRight) {
             player.velocity.x = 0;
             moving = true;
-            
+
         } else {
             player.velocity.x = playerSpeed;
             player.mirrorX(1);
@@ -1784,7 +1838,7 @@ function playerMovement() { // Moving left and right
         player.velocity.x = 0;
         moving = false;
     }
-    
+
     // Jumping and Gravity
     var grounded = false;
 
@@ -1801,14 +1855,14 @@ function playerMovement() { // Moving left and right
     if (grounded == false) {
         player.velocity.y += GRAVITY;
     }
-    
+
     // Run
     if (keyIsDown(runKey)) { // When holding Shift, the player runs faster
         playerSpeed = runSpeed;
     } else {
         playerSpeed = walkSpeed;
     }
-    
+
 }
 
 
@@ -1868,13 +1922,13 @@ function attack(){
         hitbox.setCollider("rectangle", 0, 0, hitboxColliderX, hitboxColliderY);
         hitboxes.add(hitbox);
         attacks.add(hitbox);
-        
+
         if (debugGame == "on" || debugGame == true) {
             hitbox.debug = true;
         } else {
             hitbox.debug = false;
         }
-        
+
         setTimeout (attackOff, 400); // The hitbox projectile disappears after a certain amount of time
     }
 }
@@ -1889,21 +1943,21 @@ function attackOff() {
 
 var stopInvincible;
 
-function damagePlayer() {    
+function damagePlayer() {
     if (invincible == false) { // HP goes down by 1 if you're not invincible
         player.visible = false;
         invincible = true;
-        playerHp = playerHp - 1;  
-      
+        playerHp = playerHp - 1;
+
         if (directionFacing == "left") {
             player.position.x += 10;
         } else {
             player.position.x -= 10;
         }
-      
-        stopInvincible = frameCount + 60; // frameCount is how many seconds pass in the game 
+
+        stopInvincible = frameCount + 60; // frameCount is how many seconds pass in the game
     }
-       
+
     if (playerHp <= 0) { // Game Over
         gameOver();
     }
@@ -1921,11 +1975,11 @@ function healthBar() {
     if (playerHp >= 4) {
         hpImg.changeImage("green");
     } else if (playerHp == 3) {
-        hpImg.changeImage("yellow");     
+        hpImg.changeImage("yellow");
     } else if (playerHp == 2) {
-        hpImg.changeImage("orange"); 
+        hpImg.changeImage("orange");
     } else if (playerHp == 1) {
-        hpImg.changeImage("red");   
+        hpImg.changeImage("red");
     } else {
       hpImg.remove();
     }
@@ -1944,23 +1998,23 @@ function healthBar() {
 function monsterMovement() {
     for (enemy of monsters) {
         enemy.maxSpeed = monsterSpeed;
-        
+
         if (ground.overlapPixel(enemy.position.x, enemy.position.y + 28) == false) {
              enemy.velocity.y += GRAVITY;
         }
-        
+
         for (wall of walls) {
             while (wall.overlapPixel(enemy.position.x, enemy.position.y + 28)) {
                 enemy.position.y--;
                 enemy.velocity.y = 0;
             }
         }
-        
+
         while (ground.overlapPixel(enemy.position.x, enemy.position.y + 28)) {
             enemy.position.y--;
             enemy.velocity.y = 0;
         }
-        
+
         if (enemy.position.x >= enemy.left && editorMode == false) { // Move Left
             enemy.direction = "left";
             enemy.velocity.x = -5;
@@ -1972,7 +2026,7 @@ function monsterMovement() {
         } else if (editorMode == true) {
             enemy.velocity.x = 0;
         }
-        
+
         // Restart after Editor Mode or a bump
         if (Math.abs(enemy.velocity.x) < 5 && editorMode == false) {
             if (enemy.direction === "left") {
@@ -2026,7 +2080,7 @@ function rangedEnemies() {
                 player.position.x < enemy.position.x + rangedAttackRange &&
                 player.position.y > enemy.position.y - rangedAttackRange &&
                 player.position.y < enemy.position.y + rangedAttackRange) {
-                    
+
                     enemy.changeAnimation("attack");
                     if (coolDown == false) {
                         createEnemyProjectile(enemy);
@@ -2036,11 +2090,11 @@ function rangedEnemies() {
             } else {
                 enemy.changeAnimation("idle");
             }
-            
+
             if (ground.overlapPixel(enemy.position.x, enemy.position.y + 28) == false) {
                 enemy.velocity.y += GRAVITY;
             }
-            
+
             while (ground.overlapPixel(enemy.position.x, enemy.position.y + 28)) {
                 enemy.position.y--;
                 enemy.velocity.y = 0;
@@ -2058,17 +2112,17 @@ function createEnemyProjectile(enemy) {
             if (enemy.removed == false) {
                 if (playerX > rangedEnemyX) {
                     enemy.mirrorX(1);
-                    //var 
+                    //var
                     enemyProjectile = createSprite(enemy.position.x + 15, enemy.position.y - 20);
                 } else {
                     enemy.mirrorX(-1);
-                    //var 
+                    //var
                     enemyProjectile = createSprite(enemy.position.x - 15, enemy.position.y - 20);
                 }
                 enemyProjectile.addAnimation("destroy", enemyProjectileDestroyAnim);
                 enemyProjectile.addAnimation("idle", enemyProjectileIdleAnim);
                 enemyProjectile.changeAnimation("idle");
-                
+
                 enemyProjectile.attractionPoint(projectileSpeed/5, playerX, playerY);
                 enemyProjectile.setCollider("rectangle", 0, 0, enemyProjectileColliderX, enemyProjectileColliderY);
                 enemyProjectiles.add(enemyProjectile);
@@ -2078,8 +2132,8 @@ function createEnemyProjectile(enemy) {
                     enemyProjectile.debug = true;
                 } else {
                     enemyProjectile.debug = false;
-                }        
-                
+                }
+
                 coolDown = true;
                 stopProjectiles = frameCount + 40;
             }
@@ -2175,7 +2229,7 @@ function parallaxFront(image) { // Trees
 }
 
 /*
-    
+
 */
 
 
@@ -2197,7 +2251,7 @@ function collisions() {
     healths.overlap(player, healthPackItem);
     goal.overlap(player, endGame);
 
-    
+
     if (playerPower == false) {
         player.overlap(enemyProjectiles, enemyProjectileDestroy);
         player.collide(obstacles, damagePlayer);
@@ -2214,7 +2268,7 @@ function destroyOther (destroyed, attack) {
     projectiles.remove(attack);
     hitboxes.remove(attack);
     attacks.remove(attack);
-    
+
     score += enemyScore;
 }
 
@@ -2287,7 +2341,7 @@ function mousePressed() {
             }
         }
     }
-    
+
     // Ranged Attack
     if (editorMode == false && gamePlay == true && playerAttackStyle == "ranged") {
         var projectile = createSprite(player.position.x, player.position.y);
@@ -2306,7 +2360,7 @@ function mousePressed() {
 }
 
 // Remove Objects in Editor Mode
-function spriteMouseUpdates() { 
+function spriteMouseUpdates() {
     // Checks if Mouse + Delete Key are pressed so it can remove objects from the group
     if (editorMode == true && delPressed && zoomOut == false) {
         if (mouseX >= 0 && mouseX <= canvasWidth && mouseY >= 0 && mouseY <= canvasHeight) {
@@ -2393,7 +2447,7 @@ function addEnemy(x, y, type = "monster", patrolStart = undefined, patrolEnd = u
     } else {
         newEnemy.debug = false;
     }
-    
+
     if(gamePlay == true){
     for (wall of walls.toArray()) {
         if (wall.overlapPixel(newEnemy.position.x, newEnemy.position.y + 28)) {
@@ -2421,7 +2475,7 @@ function addCoin(x, y) {
     collectibles.add(newCoin);
     allItems.add(newCoin);
 }
-    
+
 function addHealth(x, y) {
     var newHealthPack = createSprite(x, y);
     newHealthPack.addAnimation("heal", healthPackImg);
@@ -2434,7 +2488,7 @@ function addHealth(x, y) {
     healths.add(newHealthPack);
     allItems.add(newHealthPack);
 }
-    
+
 function addPowerup(x, y) {
     var newPowerup = createSprite(x, y);
     newPowerup.addAnimation("glow", powerUp);
@@ -2483,7 +2537,7 @@ function objectSwitch() {
         }
     }
 }
-    
+
 
 // Instructions for how to use Editor Mode
 function editorInstructions() {
@@ -2494,7 +2548,7 @@ function editorInstructions() {
         text("EDITOR MODE [ACTIVE]", editInstructX + 300, editInstructY + 560);
         text("Current Object:  " + editObject, editInstructX + 275, editInstructY + 590);
         text("Upload a level JSON file:", editInstructItemX - 30, editInstructY + 570);
-        
+
         // If Instructions are on, it'll show this text:
         if (instructOn == true) {
             instructionText();
@@ -2505,9 +2559,9 @@ function editorInstructions() {
             text(keyEnemy + "  to Change Object to " + textMonster, editInstructItemX, editInstructY + 100); // 100
             text(keyRanged + "  to Change Object to " + textRanged, editInstructItemX, editInstructY + 125); // 75
             text(keyChaser + "  to Change Object to " + textChaser, editInstructItemX, editInstructY + 150); // 50
-            text(keyHealth + "  to Change Object to " + textHealthPack, editInstructItemX, editInstructY + 175); // 25 
+            text(keyHealth + "  to Change Object to " + textHealthPack, editInstructItemX, editInstructY + 175); // 25
             text(keyPowerup + "  to Change Object to " + textPowerUp, editInstructItemX, editInstructY + 200); // 0
-            
+
             text("Click  to Place an Object", editInstructItemX, editInstructY + 225); // -25
             text(keyDelete + " + Click  to Delete an Object", editInstructItemX, editInstructY + 250); // -50
             text(keyCameraMove + "  to Move Camera", editInstructItemX, editInstructY + 275); // -100
@@ -2532,7 +2586,7 @@ function saveLevel(name) {
     }
 
     let enemyPositions = [];
-    
+
     for (enemy of monsters) {
         enemyPositions.push({
             x: enemy.position.x,
@@ -2542,7 +2596,7 @@ function saveLevel(name) {
             left: enemy.left
       });
     }
-    
+
     for (enemy of chasers) {
         enemyPositions.push({
             x: enemy.position.x,
@@ -2550,7 +2604,7 @@ function saveLevel(name) {
             type: "chaser"
         });
     }
-    
+
     for (enemy of ranged) {
         enemyPositions.push({
             x: enemy.position.x,
@@ -2558,7 +2612,7 @@ function saveLevel(name) {
             type: "ranged"
         });
     }
-    
+
     //let spikePositions = [];
     for (spike of spikes) {
         enemyPositions.push({
@@ -2575,7 +2629,7 @@ function saveLevel(name) {
             y: coin.position.y
       });
     }
-    
+
     let healthPackPositions = [];
     for (healthPack of healths) {
         healthPackPositions.push({
@@ -2583,7 +2637,7 @@ function saveLevel(name) {
             y: healthPack.position.y
       });
     }
-    
+
     let powerupPositions = [];
     for (powerup of powerups) {
         powerupPositions.push({
@@ -2599,7 +2653,7 @@ function saveLevel(name) {
         healths: healthPackPositions,
         powerups: powerupPositions
     };
-    
+
     saveJSON(levelData, name + ".json"); // Saves level data to a json file
     //console.log(JSON.stringify(levelData));
     storeItem(name, levelData);
@@ -2618,13 +2672,13 @@ function loadLevelJSON(loadLevel){
         let coinPositions = loadLevel.coins;
         let healthPackPositions = loadLevel.healths;
         let powerupPositions = loadLevel.powerups;
-        
+
         allItems.removeSprites();
-        
+
         for (position of platformPositions) {
             addPlatform(position.x, position.y);
         }
-        
+
         for (position of enemyPositions) {
             addEnemy(position.x, position.y, position.type, position.start, position.left);
         }
@@ -2632,11 +2686,11 @@ function loadLevelJSON(loadLevel){
         for (position of coinPositions) {
             addCoin(position.x, position.y);
         }
-        
+
         for (position of healthPackPositions) {
             addHealth(position.x, position.y);
         }
-        
+
         for (position of powerupPositions) {
             addPowerup(position.x, position.y);
         }
@@ -2644,7 +2698,7 @@ function loadLevelJSON(loadLevel){
 }
 
 function uploadLevel(file){
-    loadJSON(file.data, loadLevelJSON); 
+    loadJSON(file.data, loadLevelJSON);
     console.log("Loaded file named " + file.name);
 }
 
@@ -2664,7 +2718,7 @@ function instructionText () {
     stroke("black");
     textSize(18);
 }
-    
+
 // <-------------- Title Screen -------------->
 // * Refer back to the "Keyboard Inputs" section
 
@@ -2672,11 +2726,11 @@ function title() {
     startButton.visible = true; //startButton();
     titleButton();
     drawSprites();
-    
+
     if (startSprite == "off" || startSprite == false) {
         startButton.remove();
     }
-    
+
     textFont(font);
     titleText();
 }
@@ -2692,7 +2746,7 @@ function titleButton() {
 function titleText() {
     rectMode(CORNER);
     fill(colorTitle);
-    
+
     // Start Button Text
     strokeWeight(4);
     stroke("black");
@@ -2737,20 +2791,16 @@ function winText() {
     textAlign(CENTER);
     text(textWin, 0, 130, canvasWidth, canvasHeight);
     textSize(30);
-    text("Thank you for playing, you did AWSOME!!!!!", 0, 210, canvasWidth, canvasHeight);
-    
+    text("Thank you for playing", 0, 210, canvasWidth, canvasHeight);
+
     // Credits
     textSize(20);
     text("Game Created by: " + myName, 0, 310, canvasWidth, canvasHeight);
     text("Special Thanks: iD Tech Camps", 0, 350, canvasWidth, canvasHeight);
-    
+
     // Score
     textSize(25);
-    text("Your Final Score Is " + score + "! Congratualations!", 0, 410, canvasWidth, canvasHeight);
-  
-  // Hope you enjoyed
-  textSize(25);
-    text("Hope you enjoyed, to replay, click R on your keyboard or reload this page", 0, 450, canvasWidth, canvasHeight);
+    text("Final Score: " + score, 0, 410, canvasWidth, canvasHeight);
 }
 
 // <-------------- Game Over Screen -------------->
@@ -2769,7 +2819,7 @@ function removePlayer() {
 function gameEnd() {
     camera.position.x = 300;
     camera.position.y = 360;
-    
+
     gameoverbg.visible = true;
     drawSprites();
     strokeWeight(4);
@@ -2792,7 +2842,7 @@ function gameOverText() {
     text(textGameOver, 0, 230, canvasWidth, canvasHeight);
     textSize(25);
     text("Press " + keyReload + " to reload the page and try again", 0, 310, canvasWidth, canvasHeight);
-    
+
     // Score
     textSize(35);
     text("Your Score: " + score, 0, 410, canvasWidth, canvasHeight);
@@ -2826,11 +2876,11 @@ function cam() {
 
 function moveCam() {
     if (editorMode == true) { // Arrow keys to move the Camera
-        if (keyIsDown(panUpKey)) { 
+        if (keyIsDown(panUpKey)) {
             camera.position.y -= playerSpeed;
-        } else if (keyIsDown(panLeftKey)) { 
+        } else if (keyIsDown(panLeftKey)) {
             camera.position.x -= playerSpeed;
-        } else if (keyIsDown(panDownKey)) { 
+        } else if (keyIsDown(panDownKey)) {
             camera.position.y += playerSpeed;
         } else if (keyIsDown(panRightKey)) {
             camera.position.x += playerSpeed;
@@ -2846,7 +2896,7 @@ function gui() {
         hpBg.visible = true;
         hpImg.visible = true;
         hpBorder.visible = true;
-        
+
         camera.off();
         fill(colorGUI);
         strokeWeight(2);
@@ -2872,7 +2922,7 @@ function gui() {
         hpImg.position.y = hpY;
         hpBorder.position.x = hpX;
         hpBorder.position.y = hpY;
-        
+
     } else {
         hpBg.visible = false;
         hpImg.visible = false;
@@ -2899,26 +2949,26 @@ function drawLevel1() {
     if (goalSprite == "off" || goalSprite == false) {
         goal.remove();
     }
-    
+
     if (wall1Sprite == "off" || wall1Sprite == false) {
         wall1.remove();
     }
-    
+
     if (wall2Sprite == "off" || wall2Sprite == false) {
         wall2.remove();
     }
-    
+
     if (hpBarSprite == "off" || hpBarSprite == false) {
         hpBg.remove();
         hpImg.remove();
         hpBorder.remove();
     }
-    
+
     // Draw Sprites
     player.visible = true;
-    
+
     for (item of allItems) {
-        item.visible = true; 
+        item.visible = true;
     }
 
     ground.visible = true;
@@ -2926,7 +2976,7 @@ function drawLevel1() {
     wall1.visible = true;
     wall2.visible = true;
     gamePlay = true;
-    
+
     if (editorMode == false) {
         hpBg.visible = true;
         hpImg.visible = true;
@@ -2936,15 +2986,15 @@ function drawLevel1() {
 
 function removeLevel1() {
     for (item of allItems) {
-        item.visible = false; 
+        item.visible = false;
     }
-    
+
     player.visible = false;
     ground.visible = false;
     goal.visible = false;
     wall1.visible = false;
     wall2.visible = false;
-    
+
     hpBg.visible = false;
     hpImg.visible = false;
     hpBorder.visible = false;
@@ -2963,38 +3013,38 @@ function removeGameOver() {
 
 function debugOn() {
     for (item of allItems) {
-        item.debug = true; 
+        item.debug = true;
     }
-    
+
     player.debug = true;
     ground.debug = true;
     goal.debug = true;
     wall1.debug = true;
     wall2.debug = true;
-    
+
     hpBg.debug = true;
     hpImg.debug = true;
     hpBorder.debug  = true;
-    
+
     startButton.debug = true;
     winbg.debug = true;
 }
 
 function debugOff() {
     for (item of allItems) {
-        item.debug = false; 
+        item.debug = false;
     }
-    
+
     player.debug = false;
     ground.debug = false;
     goal.debug = false;
     wall1.debug = false;
     wall2.debug = false;
-    
+
     hpBg.debug = false;
     hpImg.debug = false;
     hpBorder.debug  = false;
-    
+
     startButton.debug = false;
     winbg.debug = false;
 }
@@ -3015,7 +3065,7 @@ function draw() {
     } else {
         removeTitle();
     }
-    
+
     // Level 1 Screen
     if (scene === "level1") { // Level 1
         drawLevel1();
@@ -3031,10 +3081,10 @@ function draw() {
         cam();
         removePlayer();
         spriteMouseUpdates();
-        
+
         healthBar();
         invincibleTimer();
-        
+
         drawSprites();
         gui();
 
@@ -3046,7 +3096,7 @@ function draw() {
     } else {
         removeLevel1();
     }
-    
+
     // You Win Screen
     if (scene === "youWin") { // You Win
         allItems.removeSprites();
@@ -3057,8 +3107,8 @@ function draw() {
     } else {
         removeYouWin();
     }
-    
-    
+
+
     // Game Over Screen
     if (scene === "gameOver") { // You Win
         allItems.removeSprites();
@@ -3069,13 +3119,13 @@ function draw() {
     } else {
         removeGameOver();
     }
-    
+
     if (debugGame == "on" || debugGame == true) {
         debugOn();
     } else {
         debugOff();
     }
-    
+
     //drawSprites(); // Need to add this to each level (right before the text is drawn!)
 }
 
@@ -3090,7 +3140,7 @@ function draw() {
 
 function loadDefault() {
     myGameTitle = "2D Platformer Game";
-    myName = "Lee"
+    //myName = "Eevee";
     debugGame = "off";
 
     // The Canvas is just what the Camera sees
@@ -3473,5 +3523,5 @@ function loadDefault() {
      keyEditorMode = "E";
      keyTurnOff = "X";
      keyReload = "R";
-    
+
 }

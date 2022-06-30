@@ -1,0 +1,13 @@
+These are instructions on how to use an IDE to view your webpage
+
+1. Have a web browser open while you work in your IDE
+2. In your IDE, right click on your index.html file and select "Copy Full Path"
+3. Open a new page in your web browser
+4. Paste the full path in the url bar of your web browser
+
+This will pull up your webpage that is hosted locally on your computer (it's not
+a real webpage yet)
+
+5. Whenever you make changes in your IDE code, be sure to save
+6. After saving, you can reload/ refresh the page in your web browser to see
+any changes
