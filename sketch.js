@@ -51,6 +51,10 @@ var song
 // Game Information
 var myGameTitle = "The Best Game EVER!!!"; // Replace 2D Platformer Game with the title of your game
 var myName = prompt("What's your name?"); // This will set the name entered as the player's name
+// In case no name is entered, the default name of Eevee will be entered
+if (myName === null || myName === ""){
+  myName = "Eevee"
+}
 var debugGame = "off"; // "on" or "off"
 var defaultValues = false; // To reset values, set to true
 
@@ -70,47 +74,45 @@ var currentLevel = prompt("Select a level:\n" +
 // This sets the current level to whatever the player writes in, whether it's a number or the level name
 switch (currentLevel) {
   case 1:
-  case "Blank Level"):
+  case "Blank Level":
     currentLevel = "Blank Level";
     break;
   case 2:
-    case "Donut Land Adventure"):
+    case "Donut Land Adventure":
     currentLevel = "Donut Land Adventure";
     break;
   case 3:
-  case "Donut Canyon"):
+  case "Donut Canyon":
     currentLevel = "Donut Canyon";
     break;
   case 4:
-  case "Ghost Heights"):
+  case "Ghost Heights":
     currentLevel = "Ghost Heights";
     break;
   case 5:
-  case "Hidden Donut"):
+  case "Hidden Donut":
     currentLevel = "Hidden Donut";
     break;
   case 6:
-  case "Spikey Spikers"):
+  case "Spikey Spikers":
     currentLevel = "Spikey Spikers";
     break;
   case 7:
-  case "Unreachable Goal"):
+  case "Unreachable Goal":
     currentLevel = "Unreachable Goal";
     break;
   case 8:
-  case "Invisible Path"):
+  case "Invisible Path":
     currentLevel = "Invisible Path";
     break;
   case 9:
-  case "Donut Mania"):
+  case "Donut Mania":
     currentLevel = "Donut Mania";
     break;
   default:
     currentLevel = "Blank Level";
 
 }
-// Music
-var song;
 
 // The Canvas is just what the Camera sees
 var canvasWidth = 600; //1280 is the full scene, 800 can provide a bit more space
