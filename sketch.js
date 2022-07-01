@@ -294,7 +294,7 @@ var platformWidth = 103;
 var textPlatform = "Platform";
 
 // Ground
-var groundImage = "images/New Piskel-1.png.png";
+var groundImage = "images/ground.png";
 var groundX = 640;
 var groundY = 675;
 
