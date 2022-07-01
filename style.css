@@ -63,3 +63,21 @@ canvas {
   padding: 3%;
   width: 10%;
 }
+
+.instructions {
+  text-align: center;
+  padding: 3%;
+  background-color: #fff;
+  border: .1rem solid #000;
+  border-radius: 25px;
+  float: right;
+  width: 50%;
+}
+table {
+  margin: auto;
+}
+
+tbody {
+  text-align: left;
+  padding: 2%;
+}
