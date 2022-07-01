@@ -431,7 +431,7 @@ var winbgSprite = "on";
 var winBgImage = "images/youwin.png";
 var winBgX = 300;
 var winBgY = 360;
-var textWin = "YOU WIN!";
+var textWin = "YOU WIN, " + myName + "!";
 var colorWin = "white";
 
 // Game Over Scene
@@ -3417,7 +3417,7 @@ function loadDefault() {
   winBgImage = "images/youwin.png";
   winBgX = 300;
   winBgY = 360;
-  textWin = "YOU WIN,\n" + myName + "!";
+  textWin = "YOU WIN, " + myName + "!";
   colorWin = "white";
 
   // Game Over Scene
